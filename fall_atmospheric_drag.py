@@ -1,6 +1,5 @@
 import pygame # type: ignore
 import os
-import random
 
 # Position the window at (x, y) - e.g., 2000, 0 to open on a second monitor
 x = 2560
@@ -12,7 +11,7 @@ pygame.font.init()
 
 WIDTH, HEIGHT = 1080.0 , 1850.0
 screen_resolution_width, screen_resolution_height =  1080.0, 1920.0
-real_screen_width, real_screen_height = 0.295, 300
+real_screen_width, real_screen_height = 0.295, 0.525
 
 px_per_meter = screen_resolution_height/ real_screen_height
 pixel_length = (real_screen_height / screen_resolution_height) 
@@ -72,7 +71,7 @@ class Ball:
 
 
 
-earthBall = Ball((0,0,255), (WIDTH/2), 1, 1, 9.817)
+earthBall = Ball((0,0,255), (WIDTH/2), 0.1, 0.008, 9.817)
 
 
 running = True
@@ -86,15 +85,16 @@ while running:
     if keys[pygame.K_r]:
               earthBall.Vy = 0
               earthBall.y = 0
-              earthBall.Vx = 0
-              earthBall.x = random.randint(50, int(WIDTH)-50)
 
     earthBall.draw(dt)
 
     font = pygame.font.SysFont("arial", 24)
     text = f"FPS: {int(clock.get_fps())}  sHeight = {real_screen_height} m, sWidth = {real_screen_width} Velocity: {earthBall.Vy:.2f}, objectHeight: {(earthBall.y)*pixel_length:.2f}"
+    text2 = f"Mass: {earthBall.mass} kg, diameter:{earthBall.sizeinPx*pixel_length}"
     text_surf = font.render(text, True, (220, 220, 255))
+    text_surf2 = font.render(text2, True, (220, 220, 255))
     screen.blit(text_surf, (10, 10))
+    screen.blit(text_surf2, (10, 30))
  
     pygame.display.flip()
     screen.fill((0, 0, 0))
